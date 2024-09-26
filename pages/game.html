@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <!--link do css(reset e estilização da página do jogo)-->
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/game.css">
-
+    <!--link do script do jogo 'defer' serve para carregar o script depois do html-->
     <script defer src="../js/game.js"></script>
-
+    <!--nome da página-->
     <title>Jogo da Memória</title>
 </head>
 <body>
-
+    <!--'main' é o elemento principal do body-->
     <main>
+        <!--cabeçalho-->
         <header>
+            <!--'span' é um conteiner em linha para estilização e manipulação-->
+            <!--este span serve para o nome-->
             <span class="player"></span>
+            <!--este span serve para o tempo-->
             <span>Tempo: <span class="timer">00</span></span>
         </header>
-
+        <!--o jogo esta dentro desta div-->
         <div class="grid"></div>
     </main>
-
 </body>
 </html>

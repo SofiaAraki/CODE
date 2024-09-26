@@ -3,27 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <!--links do css(reset da pagina e a estilização do login)-->
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/login.css">
-
+    <!--link do script do login 'defer' serve para carregar o script depois do html-->
     <script defer src="./js/login.js"></script>
+    <!--link de logo da página-->
     <link rel="shortcut icon" href="./images/brain.png" type="image/x-icon">
-
+    <!--nome da página-->
     <title>Jogo da Memória | Login</title>
 </head>
 <body>
+    <!--formulario para o login-->
     <form class="login-form">
-
+        <!--cria uma div para separar as imagens-->
         <div class="login_header">
             <img src="./images/logo.png" alt="logo">
             <img src="./images/brain.png" alt="brain icon">
+            <!--nome do jogo-->
             <h1>Jogo da Memória</h1>
         </div>
-
+        <!--cria uma caixa de texto para inserir o nome-->
         <input type="text" placeholder="Name" class="login_input">
-        <button type="submit" class="login_button">Play</button>
-
+        <!--cria um botão para enviar o formulario e alterar de pagina-->
+        <button type="submit" class="login_button" disabled>Play</button>
     </form>
 </body>    
 </html>

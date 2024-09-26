@@ -1,5 +1,7 @@
+/** importando a fonte que sera ultilizada no projeto */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+/**resetando o css e adicionando a fonte importada */
 * {
   margin: 0;
   padding: 0;
