@@ -40,8 +40,9 @@
 
 /**formatando o botão da tela de login */
 .login_button {
-    background-color: #00b5cc;
-    border-radius: 8px;
+    background-color: #263d2d;
+    border: 3px solid #b2df28;
+    border-radius: 8px ;
     color: #fff;
     cursor: pointer;
     font-size: 1em;
