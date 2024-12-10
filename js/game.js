@@ -137,11 +137,12 @@ const loadGame = () => {
 }
 
 // contador de tempo
-const startTimer = () => {
+let loop;
 
-    this.loop = setInterval(() => {
-      const currentTime = +timer.innerHTML;
-      timer.innerHTML = currentTime + 1;
+const startTimer = () => {
+    loop = setInterval(() => {
+        const currentTime = +timer.innerHTML;
+        timer.innerHTML = currentTime + 1;
       checkEndGame();
     }, 1000);
   
