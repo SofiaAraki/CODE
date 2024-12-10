@@ -43,7 +43,7 @@ const checkEndGame = () => {
         if (playAgain) {
             window.location.reload(); // Recarrega a página para reiniciar o jogo
         } else {
-            window.location.href = 'index.html'; // Redireciona para a página principal
+            window.location.href = '../index.html'; // Redireciona para a página principal
         }
     }
 };
