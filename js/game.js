@@ -31,17 +31,23 @@ let secondCard = '';
 
 //cria uma função para verificar se o jogo terminou
 const checkEndGame = () => {
-
     const disabledCards = document.querySelectorAll('.disabled-card');
+
     // verifica se o número de cartas desabilitadas é igual ao número de cartas totais
-    // isso indica o fim do jogo, portanto para o tempo e exibe uma mensagem de parabéns
     if (disabledCards.length === 20) {
         clearInterval(this.loop);
         alert(`Parabéns, ${spanPlayer.innerHTML}! Seu tempo foi de: ${timer.innerHTML}`);
-        window.confirm('Deseja jogar novamente?');
-        window.location.reload();
+        
+        // verifica se o jogador deseja jogar novamente
+        const playAgain = window.confirm('Deseja jogar novamente?');
+        if (playAgain) {
+            window.location.reload(); // Recarrega a página para reiniciar o jogo
+        } else {
+            window.location.href = 'index.html'; // Redireciona para a página principal
+        }
     }
-}
+};
+
 
 //cria uma função para verificar se as cartas selecionadas são iguais
 const checkCards = () => {
