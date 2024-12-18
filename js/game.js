@@ -1,9 +1,8 @@
-//
 const grid = document.querySelector('.grid');
 const spanPlayer = document.querySelector('.player');
 const timer = document.querySelector('.timer');
 
-// cria uma lista de cartas
+// Lista de cartas
 const characters = [
     'css',
     'html',
@@ -17,146 +16,119 @@ const characters = [
     'swift',
 ];
 
-//
+// Função utilitária para criar elementos com classe
 const createElement = (tag, className) => {
     const element = document.createElement(tag);
     element.className = className;
     return element;
-}   
+};
 
-//let só pode ser acessado dentro do escopo onde foi criado
-//define variaveis para verificar as cartas selecionadas
+// Variáveis para controle do jogo
 let firstCard = '';
 let secondCard = '';
+let loop;
 
-//cria uma função para verificar se o jogo terminou
+// Função para verificar o fim do jogo
 const checkEndGame = () => {
     const disabledCards = document.querySelectorAll('.disabled-card');
 
-    // verifica se o número de cartas desabilitadas é igual ao número de cartas totais
-    if (disabledCards.length === 20) {
-        clearInterval(this.loop);
-        alert(`Parabéns, ${spanPlayer.innerHTML}! Seu tempo foi de: ${timer.innerHTML}`);
-        
-        // verifica se o jogador deseja jogar novamente
-        const playAgain = window.confirm('Deseja jogar novamente?');
-        if (playAgain) {
-            window.location.reload(); // Recarrega a página para reiniciar o jogo
-        } else {
-            window.location.href = '../index.html'; // Redireciona para a página principal
-        }
+    if (disabledCards.length === characters.length * 2) {
+        clearInterval(loop);
+        alert(`Parabéns, ${spanPlayer.innerHTML}! Seu tempo foi de: ${timer.innerHTML} segundos.`);
+        askPlayAgain();
     }
 };
 
+// Função para perguntar se o jogador deseja jogar novamente
+const askPlayAgain = () => {
+    const playAgain = window.confirm('Deseja jogar novamente?');
 
-//cria uma função para verificar se as cartas selecionadas são iguais
+    if (playAgain) {
+        window.location.reload();
+    } else {
+        window.location.href = '../index.html';
+    }
+};
+
+// Função para verificar se as cartas selecionadas são iguais
 const checkCards = () => {
-
-    // cria uma variável para verificar se as cartas selecionadas são iguais
     const firstCharacter = firstCard.getAttribute('data-character');
     const secondCharacter = secondCard.getAttribute('data-character');
 
-    // verifica se as cartas selecionadas são iguais
     if (firstCharacter === secondCharacter) {
-        
-        // dasabilita as cartas selecionadas
         firstCard.firstChild.classList.add('disabled-card');
         secondCard.firstChild.classList.add('disabled-card');
-
-        firstCard = '';
-        secondCard = '';
-    
-    // caso as cartas selecionadas não sejam iguais, remove a classe 'reveal-card' das cartas selecionadas
-    // ou seja, vira elas novamente
+        resetCards();
+        checkEndGame();
     } else {
         setTimeout(() => {
             firstCard.classList.remove('reveal-card');
-            secondCard.classList.remove('reveal-card');            
-
-            firstCard = '';
-            secondCard = '';
+            secondCard.classList.remove('reveal-card');
+            resetCards();
         }, 500);
     }
-}
+};
 
-// cria uma função para revelar as cartas selecionadas
+// Função para resetar as cartas selecionadas
+const resetCards = () => {
+    firstCard = '';
+    secondCard = '';
+};
+
+// Função para revelar uma carta
 const revealCard = ({ target }) => {
-    
-    // verifica se a carta selecionada já está revelada
-    if (target.parentNode.className.includes('reveal-card')) {
-      return;
-    }
-    // verifica se já foi selecionada uma carta
-    if (firstCard === '') {
-  
-      target.parentNode.classList.add('reveal-card');
-      firstCard = target.parentNode;
-    
-    // verifica se já foi selecionada a segunda carta
-    } else if (secondCard === '') {
-  
-      target.parentNode.classList.add('reveal-card');
-      secondCard = target.parentNode;
-    // chama a função para verificar se as cartas selecionadas são iguais
-      checkCards(); 
-    }
-}
+    if (target.parentNode.className.includes('reveal-card')) return;
 
-// cria uma função para criar as cartas
+    if (!firstCard) {
+        target.parentNode.classList.add('reveal-card');
+        firstCard = target.parentNode;
+    } else if (!secondCard) {
+        target.parentNode.classList.add('reveal-card');
+        secondCard = target.parentNode;
+        checkCards();
+    }
+};
+
+// Função para criar uma carta
 const createCard = (character) => {
-
-    // 
     const card = createElement('div', 'card');
     const front = createElement('div', 'face front');
     const back = createElement('div', 'face back');
-  
+
     front.style.backgroundImage = `url('../images/${character}.png')`;
-    
-    // adiciona um nó filho à carta
+
     card.appendChild(front);
     card.appendChild(back);
-    
-    // adiciona um evento de clique à carta
+    card.setAttribute('data-character', character);
+
     card.addEventListener('click', revealCard);
 
-    //
-    card.setAttribute('data-character', character)
-  
     return card;
-}
+};
 
-// cria uma função para carregar o jogo
+// Função para carregar o jogo
 const loadGame = () => {
-
-    // cria um array para duplicar as cartas
     const duplicateCharacters = [...characters, ...characters];
-    
-    // cria um array ordenado aleatoriamente
-    // serve para distribuir as cartas aleatoriamente no tabuleiro
     const shuffledArray = duplicateCharacters.sort(() => Math.random() - 0.5);
-    
-    // 
+
     shuffledArray.forEach((character) => {
-      const card = createCard(character);
-      grid.appendChild(card);
+        const card = createCard(character);
+        grid.appendChild(card);
     });
-}
+};
 
-// contador de tempo
-let loop;
-
+// Função para iniciar o contador de tempo
 const startTimer = () => {
     loop = setInterval(() => {
         const currentTime = +timer.innerHTML;
         timer.innerHTML = currentTime + 1;
-      checkEndGame();
     }, 1000);
-  
-}
+};
 
+// Configuração inicial do jogo
 window.onload = () => {
-
-    spanPlayer.innerHTML = localStorage.getItem('player');
+    spanPlayer.innerHTML = localStorage.getItem('player') || 'Jogador';
+    timer.innerHTML = '0';
     startTimer();
-    loadGame(); 
-}
+    loadGame();
+};
